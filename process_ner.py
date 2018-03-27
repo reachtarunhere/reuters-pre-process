@@ -51,3 +51,17 @@ def filter_out_sents(sent_list):
             return False
         return True
     return [s for s in sent_list if include_sent(s)]
+
+
+def process_single_file(load_path, save_path):
+
+    articles = get_articles_from_file(load_path)
+    valid_articles = filter_out_invalid(articles)
+    all_paras = [a['text'] for a in valid_articles]
+    all_paras = itertools.chain.from_iterable(all_paras)
+    all_paras = filter_out_header(all_paras)
+    sentences = get_sents_from_text(all_paras)
+    sentences = filter_out_sents(sentences)
+
+    with open(save_path, mode='wt', encoding='utf-8') as w_file:
+        w_file.write('\n'.join(sentences))
