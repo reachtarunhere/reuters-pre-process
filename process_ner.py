@@ -1,6 +1,8 @@
 import glob
 import json
 import spacy
+import itertools
+import sys
 
 # Load Model (Useful even if helpers are imported to some other files)
 
@@ -10,6 +12,11 @@ nlp = spacy.load('en', disable=['ner', 'tagger'])
 
 
 def get_all_files(root): return glob.glob(root + "/*/*/*.json")
+
+
+def make_save_path(load_path):
+    """Hacky placeholder. Modify if need custom directory etc"""
+    return load_path.replace('.json', '.sents')
 
 
 def get_articles_from_file(path):
@@ -65,3 +72,14 @@ def process_single_file(load_path, save_path):
 
     with open(save_path, mode='wt', encoding='utf-8') as w_file:
         w_file.write('\n'.join(sentences))
+
+
+if __name__ == '__main__':
+
+    crawled_folder = sys.argv[1]  # Lazy hack. Could use argparse instead.
+    all_files = get_all_files(crawled_folder)
+
+    for load_path in all_files:
+
+        print("Processing", load_path)
+        process_single_file(load_path, make_save_path(load_path))
