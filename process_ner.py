@@ -42,5 +42,12 @@ def get_sents_from_text(para_list):
 
 
 def filter_out_sents(sent_list):
-    bad_sents = ['”', ]  # Add more if discovered.
-    return [s for s in sent_list if s not in bad_sents]
+
+    def include_sent(s):
+        bad_sents = ['”', ]  # Add more if discovered.
+        if s in bad_sents:
+            return False
+        elif len(s) < 35:
+            return False
+        return True
+    return [s for s in sent_list if include_sent(s)]
