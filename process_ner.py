@@ -24,10 +24,10 @@ def filter_out_invalid(articles):
 
 
 def filter_out_header(para_list):
-    
+
     def not_x_min_read(para):
         return False if para.endswith('Min Read') and len(para.split()) == 3 else True
-    
+
     return [p for p in para_list if not_x_min_read(p) and p != 'Reuters Staff']
 
 
@@ -41,3 +41,6 @@ def get_sents_from_text(para_list):
     return sentences
 
 
+def filter_out_sents(sent_list):
+    bad_sents = ['”', ]  # Add more if discovered.
+    return [s for s in sent_list if s not in bad_sents]
