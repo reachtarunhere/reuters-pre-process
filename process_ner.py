@@ -1,5 +1,10 @@
 import glob
 import json
+import spacy
+
+# Load Model (Useful even if helpers are imported to some other files)
+
+nlp = spacy.load('en', disable=['ner', 'tagger'])
 
 # Helper Functions
 
@@ -24,3 +29,15 @@ def filter_out_header(para_list):
         return False if para.endswith('Min Read') and len(para.split()) == 3 else True
     
     return [p for p in para_list if not_x_min_read(p) and p != 'Reuters Staff']
+
+
+def get_sents_from_text(para_list):
+
+    sentences = []
+
+    for para in nlp.pipe(para_list, batch_size=100, n_threads=3):
+        sentences.extend([s.text for s in para.sents])
+
+    return sentences
+
+
