@@ -38,8 +38,15 @@ def filter_out_sents(sent_list):
 
 
 def break_sentences(sent_list):
-    """ Processing together for multiple sentences."""
-    pass
+    """ Processing together for multiple sentences.
+        Might consider writing sentences one at a time to avoid memory problems."""
+    sentences_tokenized = []
+
+    for sent in nlp.pipe(sent_list, batch_size=100, n_threads=3):
+        sentences_tokenized.extend([w.string for w in sent] + ["\n"])
+
+    return sentences_tokenized
+
 
 def process_single_file(load_path, save_path):
 
