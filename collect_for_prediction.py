@@ -1,4 +1,5 @@
 import glob
+import sys
 
 def get_all_files(root): return glob.glob(root + "/*/*/*.copr")
 
