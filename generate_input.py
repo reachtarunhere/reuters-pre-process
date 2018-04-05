@@ -11,7 +11,7 @@ nlp = spacy.load('en', disable=['ner', 'tagger'])
 # Helper Functions
 
 
-def get_all_files(root): return glob.glob(root + "/*/*/*.json")
+def get_all_files(root): return glob.glob(root + "/*/*/*.sents")
 
 
 def make_save_path(load_path):
