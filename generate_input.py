@@ -43,7 +43,7 @@ def break_sentences(sent_list):
     sentences_tokenized = []
 
     for sent in nlp.pipe(sent_list, batch_size=100, n_threads=3):
-        sentences_tokenized.extend([w.string for w in sent] + ["\n"])
+        sentences_tokenized.extend([w.string.strip() for w in sent] + ["\n"])
 
     return sentences_tokenized
 
