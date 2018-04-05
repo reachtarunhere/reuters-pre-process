@@ -55,7 +55,7 @@ def process_single_file(load_path, save_path):
     sentences_tokenized = break_sentences(valid_sentences)
 
     with open(save_path, mode='wt', encoding='utf-8') as w_file:
-        w_file.write('\n'.join(sentences_tokenized))
+        w_file.write('-DOCSTART-\n\n' + '\n'.join(sentences_tokenized))
 
 
 if __name__ == '__main__':
