@@ -16,7 +16,7 @@ def get_all_files(root): return glob.glob(root + "/*/*/*.json")
 
 def make_save_path(load_path):
     """Hacky placeholder. Modify if need custom directory etc"""
-    return load_path.replace('.copr', '.sents') # conll input format
+    return load_path.replace('.sents', '.copr') # conll input format
 
 
 def get_sentences_from_file(path):
@@ -50,16 +50,12 @@ def break_sentences(sent_list):
 
 def process_single_file(load_path, save_path):
 
-    articles = get_articles_from_file(load_path)
-    valid_articles = filter_out_invalid(articles)
-    all_paras = [a['text'] for a in valid_articles]
-    all_paras = itertools.chain.from_iterable(all_paras)
-    all_paras = filter_out_header(all_paras)
-    sentences = get_sents_from_text(all_paras)
-    sentences = filter_out_sents(sentences)
+    sentences = get_sentences_from_file(load_path)
+    valid_sentences = filter_out_sents(sentences)
+    sentences_tokenized = break_sentences(valid_sentences)
 
     with open(save_path, mode='wt', encoding='utf-8') as w_file:
-        w_file.write('\n'.join(sentences))
+        w_file.write('\n'.join(sentences_tokenized))
 
 
 if __name__ == '__main__':
