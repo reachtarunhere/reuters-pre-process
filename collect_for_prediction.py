@@ -5,7 +5,7 @@ def get_all_files(root): return glob.glob(root + "/*/*/*.copr")
 def process_single_file(path, output_file):
     with open(path, 'r') as f:
         lines = f.readlines()
-    lines = lines[2:]
+    lines = lines[1:]
     output_file.writelines(lines)
 
 if __name__ == '__main__':
